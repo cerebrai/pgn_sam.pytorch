@@ -1,8 +1,15 @@
-# sam.pytorch
+# PGN SAM Pytorch
 
-A PyTorch implementation of *Sharpness-Aware Minimization for Efficiently Improving Generalization* (
-Foret+2020) [Paper](https://arxiv.org/abs/2010.01412), [Official implementation](https://github.com/google-research/sam)
+A PyTorch implementation of *Penalizing Gradient Norm for Efficiently Improving
+Generalization in Deep Learning* (
+Zhao+2022) [Paper](https://arxiv.org/abs/2202.03599), [Official implementation](https://github.com/zhaoyang-0204/gnp)
 .
+
+# Disclaimer
+
+This is a fork of the original (unofficial) sam.pytorch [repo](https://github.com/moskomule/sam.pytorch). I have extended it to include the following:
+- Implementation of the Penalizing gradient norm (PGN) method.
+- Adjusted the code to work with a subset of the training data. This allows for parameter finetuning/
 
 ## Requirements
 
@@ -17,41 +24,7 @@ To run the example, you further need
 ## Example
 
 ```commandline
-python cifar10.py [--optim.name {sam,sgd}] [--model {renst20, wrn28_2}] [--optim.rho 0.05]
-```
-
-### Results: Test Accuracy (CIFAR-10)
-
-Model       | SAM | SGD |
----         | --- | --- |
-ResNet-20   | 93.5| 93.2|
-WRN28-2     | 95.8| 95.4|
-ResNeXT29   | 96.4| 95.8|
-
-SAM needs double forward passes per each update, thus training with SAM is slower than training with SGD. In case of
-ResNet-20 training, 80 mins vs 50 mins on my environment. Additional options `--use_amp --jit_model` may slightly
-accelerates the training.
-
-## Usage
-
-`SAMSGD` can be used as a drop-in replacement of PyTorch optimizers by using a closure as follows. Also, it is compatible
-with `lr_scheduler` and has `state_dict` and `load_state_dict`. Currently, this implementation does not support multiple parameter groups.
-
-```python
-from sam import SAMSGD
-
-optimizer = SAMSGD(model.parameters(), lr=1e-1, rho=0.05)
-
-for input, target in dataset:
-    def closure():
-        optimizer.zero_grad()
-        output = model(input)
-        loss = loss_f(output, target)
-        loss.backward()
-        return loss
-
-
-    loss = optimizer.step(closure)
+python cifar10.py [--optim.name {pgn_sam, sam, sgd}] [--model {renst20, wrn28_2}] [--optim.rho 0.05] [--optim.alpha 0.1]
 ```
 
 ## Citation
@@ -70,5 +43,12 @@ for input, target in dataset:
     titile = {sam.pytorch},
     url    = {https://github.com/moskomule/sam.pytorch},
     year   = {2020}
+}
+
+@software{pgnsampytorch
+    author = {Syed Safwan Khalid},
+    titile = {pgn_sam.pytorch},
+    url    = {},
+    year   = {2024}
 }
 ```
