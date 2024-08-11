@@ -7,9 +7,9 @@ Zhao+2022) [Paper](https://arxiv.org/abs/2202.03599), [Official implementation](
 
 # Disclaimer
 
-This is a fork of the original (unofficial) sam.pytorch [repo](https://github.com/moskomule/sam.pytorch). I have extended it to include the following:
-- Implementation of the Penalizing gradient norm (PGN) method.
-- Adjusted the code to work with a subset of the training data. This allows for parameter finetuning/
+This is a fork of the sam.pytorch [repo](https://github.com/moskomule/sam.pytorch). I have extended it to include the following:
+- Implementation of the Penalizing gradient norm (PGN) method. [Paper](https://arxiv.org/abs/2202.03599)
+- Adjusted the code to work with a subset of the training data. This allows for parameter finetuning
 
 ## Requirements
 
